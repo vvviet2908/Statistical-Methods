@@ -1,0 +1,85 @@
+---
+title: "Task 2 - Statistical Methods Project - Vo Van Viet, Khong Minh Duc, Cao Ngoc Bao Long"
+output:
+  html_document:
+    df_print: paged
+---
+
+Analysing Global Warming in Vietnam
+The purpose of this task is to investigate statistically whether there is a significant change in
+temperature over time in Vietnam. 
+
+First we import the downloaded files from computer.
+The Temperature in Vietnam from 1901 to 1931 as tem0131:
+
+```{r}
+tem0131 <- read.csv("C:/Users/asus/Downloads/Documents/Statistical Method/tas_1901_1930_VNM.csv", header= TRUE)
+head(tem0131)
+```
+
+The Temperature in Vietnam from 1991 to 2016 as tem9116:
+```{r}
+tem9116 <- read.csv("C:/Users/asus/Downloads/Documents/Statistical Method/tas_1991_2016_VNM.csv", header= TRUE)
+head(tem9116)
+
+```
+
+Assumme August is the month of the birthday of a student in group, so we collect two datasets which have the Temperature that have been measure on August. Where the column "Statistics" has the values " Aug Average". 
+```{r}
+tem_on_Aug0131 <- tem0131$Statistics == " Aug Average" #dataset1
+tem0131[tem_on_Aug0131,]
+```
+
+```{r}
+tem_on_Aug9116 <- tem9116$Statistics == " Aug Average" #dataset2
+tem9116[tem_on_Aug9116,]
+```
+
+Denote mu1, sd1, n1 is the mean, the standard deviation and the sample size of Temperature from 1901 to 1931
+       mu2, sd2, n2 is the mean, the standard deviation and the sample size of Temperature from 1991 to 2016
+We compute mu1, sd1, and n1:
+```{r}
+mu1= mean(tem0131[tem_on_Aug0131,][["Temperature....Celsius."]])
+mu1
+sd1=sd(tem0131[tem_on_Aug0131,][["Temperature....Celsius."]])
+sd1
+n1=length(tem0131[tem_on_Aug0131,][["Temperature....Celsius."]])
+n1
+```
+Compute mu2, sd2, and n2:
+```{r}
+mu2=mean(tem9116[tem_on_Aug9116,][["Temperature....Celsius."]])
+mu2
+sd2=sd(tem9116[tem_on_Aug9116,][["Temperature....Celsius."]])
+sd2
+n2=length(tem9116[tem_on_Aug9116,][["Temperature....Celsius."]])
+n2
+```
+Next, we state the null hypothesis and the alternative hypothesis:
+H0: mu1-mu2 <= 0 (mu1 <= mu2) vs. Ha: mu1-mu2 > 0 (mu1 > mu2)
+
+Assign significane level, compute critical value:
+```{r}
+d0=0
+alpha <- 0.05                      #significane level
+t.alpha = qt(1-alpha,df=n1+n2-2)   #critical value
+t.alpha
+```
+Compute sp
+```{r}
+sp=sqrt(((n1-1)*sd1^2)+((n2-1)*sd2^2))/(n1+n2-2)
+```
+Compute the test statistic
+```{r}
+ts=((mu1-mu2)-d0)/(sp*sqrt((1/n1)+(1/n2)))
+ts
+
+```
+Then, we compare the test statistic and the critical value. Base on Estimating the Difference in Means of Two Normal
+Populations (Hypothesis Testing), we can make a conclusion
+```{r}
+if (ts > t.alpha) print("reject H0, it claimed that mu1 > mu2 ") else print("fail to reject H0, it claimed that mu1 <= mu2")
+```
+The result of that test showed that 95% the average temperature from 1991 to 2016 is larger than the average temperature from 1901 to 1931. In other words, we can say there has been an increase in the average temperatures over the years. 
+The test announces that the Earth is being more and more warmer, and reminds people to care about the environment.
+

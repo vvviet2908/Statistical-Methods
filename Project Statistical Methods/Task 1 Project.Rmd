@@ -1,0 +1,257 @@
+---
+title: "Task 1 - Statistical Methods Project - Vo Van Viet, Khong Minh Duc, Cao Ngoc Bao Long"
+output:
+  html_document:
+    df_print: paged
+---
+Exercise 5.8
+
+Firstly, we assign the sample size, sample standard deviation, sample mean and the confidence level
+
+```{r}
+n=15            #sample size
+s=12.5          #sample standard deviation
+ybar=7.2        #sample mean
+alpha <- 0.01   #assign the confidence level
+```
+
+Next, we compute the lower and the upper of the interval
+```{r}
+t.halfalpha= qt(p=1-(alpha/2),df=n-1) #compute t of half alpha and df
+E=t.halfalpha*s/sqrt(n)               #compute margin of error
+lower= ybar-E                         #calculate the lower of the interval
+upper= ybar+E                         #calculate the upper of the interval
+```
+
+```{r}
+cat("confidence interval: between",lower ,"and", upper )
+```
+
+
+Exercise 5.9:
+
+Firstly, we assign the sample size, sample standard deviation, sample mean and the confidence level
+```{r}
+n=200           #sample size
+s=1.3           #sample standard deviation
+ybar=2.8        #sample mean
+alpha <- 0.05   #assign the confidence level
+```
+
+Next, we compute the lower and the upper of the interval
+```{r}
+z.halfalpha= qnorm(1-alpha/2) #compute t of half alpha and df
+E=z.halfalpha*s/sqrt(n)       #compute margin of error
+lower= ybar-E                 #calculate the lower of the interval
+upper= ybar+E                 #calculate the upper of the interval
+```
+```{r}
+cat("confidence interval: between",lower ,"and", upper )
+```
+
+
+Exercise 5.39:
+a/ Firstly, we assign the data, the confidence level and compute the sample size, sample standard deviation, sample mean
+```{r}
+tire <- c(25,27,35,42,28,37,40,31,29,33,30,26,31,28,30) #assign the data
+n=length(tire)      #sample size
+n
+s=sd(tire)          #sample standard deviation
+s
+ybar=mean (tire)    #sample mean
+ybar
+alpha <- 0.01       #assign the confidence level
+```
+
+Next, we compute the lower and the upper of the interval
+```{r}
+t.halfalpha= qt(p=1-(alpha/2),df=n-1) #compute t of half alpha and df
+E=t.halfalpha*s/sqrt(n)               #compute margin of error
+lower= ybar-E                         #calculate the lower of the interval
+upper= ybar+E                         #calculate the upper of the interval
+```
+
+```{r}
+cat("confidence interval: between",lower ,"and", upper )
+```
+
+b/ We state the null hypothesis and the alternative hypothesis are:
+H0: mu >= 35 vs. Ha: mu < 35
+
+Then, we compute the test statistic and the critical value 
+```{r}
+mu0=35
+ts = (ybar-mu0)/(s/sqrt(n))  #test statistic
+ts
+t.alpha = qt(1-alpha,df=n-1)  
+-t.alpha                     #critical value
+```
+Next, we compare the test statistic and the critical value and conclude.
+```{r}
+if (ts < -t.alpha) print("reject H0") else print("fail to reject H0")
+```
+
+The result showed that the claim of that company is rejected.
+
+Compute the lower tail p-value
+```{r}
+pval = pt(ts, df=n-1)
+pval        #lower tail p-value
+```
+
+
+Exercise 5.40:
+
+Case 1:
+
+We state the null hypothesis and the alternative hypothesis are:
+H0: mu = 35 vs. Ha: mu not equals 35
+
+we compute the lower and upper of the interval
+```{r}
+alpha <- 0.05                         #assign the confidence level
+t.halfalpha= qt(p=1-(alpha/2),df=n-1) #compute t of half alpha and df
+E=t.halfalpha*s/sqrt(n)               #compute margin of error
+lower= ybar-E                         #calculate the lower of the interval
+upper= ybar+E                         #calculate the upper of the interval
+```
+
+```{r}
+cat("confidence interval: between",lower ,"and", upper )
+```
+
+Next, we check whether mu0 is lie between the lower and upper tails or not and conclude
+```{r}
+if(mu0>lower && mu0<upper) print("fail to reject H0") else print ("reject H0")
+```
+
+case 2:
+In another hand, we do the hypothesis testing:
+
+We compared the computed test statistic from previous exercise and the new critical value and conclude 
+```{r}
+if (ts > t.halfalpha) print("reject H0") else print("fail to reject H0")
+```
+
+We can see that the results from 2 cases are different, so we claim that there is a contradiction 
+
+
+Exercise 5.41: 
+a/ Firstly, we assign the data, the confidence level and compute the sample size, sample standard deviation, sample mean
+```{r}
+oxygen <- c(5.1, 4.9,5.6,4.2,4.8,4.5,5.3,5.2)  #assign the data
+n=length(oxygen)                               #sample size
+n
+s=sd(oxygen)                                   #sample standard deviation
+s
+ybar=mean (oxygen)                             #sample mean
+ybar
+```
+
+Next, we compute the lower and the upper of the interval
+```{r}                         
+alpha <- 0.05                         #assign the confidence level
+t.halfalpha= qt(p=1-(alpha/2),df=n-1) #compute t of half alpha and df
+E=t.halfalpha*s/sqrt(n)               #compute margin of error
+lower= ybar-E                         #calculate the lower of the interval
+upper= ybar+E                         #calculate the upper of the interval
+```
+```{r}
+cat("confidence interval: between",lower ,"and", upper )
+```
+b/ We can see 5 is included in the 95% confidence interval, but not sure that the mean is always less than 5 
+
+c/We state the null hypothesis and the alternative hypothesis are:
+H0: mu >= 5 vs. Ha: mu < 5
+Then, we compute the test statistic and the critical value 
+```{r}
+ts = (ybar-mu0)/(s/sqrt(n))  #test statistic
+t.alpha = qt(1-alpha,df=n-1)  
+-t.alpha                     #critical value
+```
+
+We compare the test statistic and the critical value
+```{r}
+if (ts < -t.alpha) print("reject H0") else print("fail to reject H0")
+```
+
+The result showed that there is in sufficient evidence to support that the mean oxgen level is less than 5 ppm
+
+Compute lower tail p-value
+```{r}
+pval = pt(ts, df=n-1)
+pval #lower tail p-value
+```
+
+Exercise 5.42:
+
+Firstly, we assign the data, the confidence level and compute the sample size, sample standard deviation, sample mean
+```{r}
+volumes <- c(1660,1820,1590,1440,1730,1680,1750,1720,1900,1570,1700,1900,1800,1770,2010,1580,1620,1690)
+n=length(volumes)     #sample size
+n
+s=sd(volumes)         #sample standard deviation
+s
+ybar=mean (volumes)   #sample mean
+ybar
+
+```
+a/
+We state the null hypothesis and the alternative hypothesis are:
+H0: mu <= 1600 vs. Ha: mu > 1600
+Then, we compute the test statistic and the critical value 
+```{r}
+alpha <- 0.05                 #assign the confidence level
+mu0=1600
+ts = (ybar-mu0)/(s/sqrt(n))   #test statistic
+ts
+t.alpha = qt(1-alpha,df=n-1)  #critical value
+t.alpha
+```
+
+We compare the test statistic and the critical value
+```{r}
+if (ts > t.alpha) print("reject H0") else print("fail to reject H0")
+```
+The result showed that there is in sufficient evidence to support that the average volume is greater than 1600 cubic feet
+
+b/We compute the lower and the upper of the interval
+```{r}
+t.halfalpha= qt(p=1-(alpha/2),df=n-1) #compute t of half alpha and df
+E=t.halfalpha*s/sqrt(n)               #compute margin of error
+lower= ybar-E                         #calculate the lower of the interval
+upper= ybar+E                         #calculate the upper of the interval
+```
+```{r}
+cat("confidence interval: between",lower ,"and", upper )
+```
+c/ Compute the upper tail p-value
+```{r}
+pval = pt(ts, df=n-1, lower.tail = FALSE)
+pval #upper tail p-value
+```
+
+Exercise 11.4:
+First, we assign the data
+```{r}
+x <- c(7,12,14,22,27,33,37,39,42,49,53,61)
+y <- c(10.6,16.8,23.3,12.5,91.7,67.7,130.7,110.3,147.3,138.3,142.6,151.4)
+```
+Then, we used the function lm() to compute the intercept and slope of the linear regression model
+```{r}
+RA <- lm(y~x)
+RA
+```
+Here, we have gotten the function y= -16.505 + 3.135x.
+We Sketch the scatter plot and the regression line
+```{r}
+plot(x, y, pch = 16, cex = 1.3, col = "blue", main = "x and y", xlab = "x", ylab = "y")
+abline(lm(y~x))
+```
+Then, we used the least-squares prediction equation to predict y when x=40 
+```{r}
+xi <- 40
+yi <- -16.505 + 3.135*xi
+cat("The predicted y is",yi)
+```
+

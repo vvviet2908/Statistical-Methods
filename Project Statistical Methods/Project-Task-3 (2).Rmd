@@ -1,0 +1,70 @@
+---
+title: Task 3(2) - Statistical Methods Project - Vo Van Viet, Khong Minh Duc, Cao
+  Ngoc Bao Long
+output:
+  html_document:
+    df_print: paged
+---
+First, we need to import the library "mosaic"
+
+```{r}
+library(mosaic)
+```
+Then, we assign the data from exersice 5.36
+```{r}
+compre <- c(60,76,76,90,81,75,95,98,88,73,90,66,91,83,100,85,76,69,91,78)
+compre
+```
+Computing the mean of 10000 bootstrap samples by resampling the dataset 
+```{r}
+mean_each <- do(10000) * mean(resample(compre,replace=TRUE))
+head(mean_each)
+```
+Sketching the histogram of mean of each bootstrap sample
+```{r}
+histogram(mean_each[["mean"]])
+```
+Computing the mean and the standard deviation of all bootstrap samples
+```{r}
+ybar<-mean(mean_each[["mean"]])
+ybar
+s <- sd(mean_each[["mean"]])
+s
+```
+Assigning the sample size, significane level
+```{r}
+n <- length(compre)
+alpha <- 0.05  
+```
+The hypothesis test: H0 <= 80 vs. Ha > 80 
+```{r}
+mu0=80
+```
+Computing the Test Statistic and Critical Value
+```{r}
+ts = (ybar-mu0)/(s/sqrt(n))#test statistic
+ts
+t.alpha = qt(1-alpha,df=n-1)  #critical value
+t.alpha
+```
+Testing:
+```{r}
+if (ts > t.alpha) print("reject H0") else print("fail to reject H0")
+```
+P_value
+```{r}
+pval = pt(ts, df=n-1, lower.tail = FALSE)
+pval #upper tail p-value
+```
+
+From Exersice 5.37
+Calculating the p-value of that case
+```{r}
+ybar37 <- mean (compre)
+s37 <- sd(compre)
+ts37 = (ybar-mu0)/(s/sqrt(n))
+pval37 = pt(ts37, df=n-1, lower.tail = FALSE)
+pval37
+```
+As we can see the p-value from 5.37 and the p-value are approximately similar
+
